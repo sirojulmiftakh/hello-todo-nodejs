@@ -1,0 +1,19 @@
+{
+  "name": "todo app",
+  "version": "1.0.0",
+  "description": "todo app with nodejs",
+  "main": "server.js",
+  "keywords": [
+    "nodejs",
+    "backend",
+    "express",
+    "mysql"
+  ],
+  "author": {
+    "name": "ahmad sirojul miftakh",
+    "email": "sirojulmiftakh@gmail.com"
+  },
+  "engines": {
+    "node": "12.12.0"
+  }
+}
