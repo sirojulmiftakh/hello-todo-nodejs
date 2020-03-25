@@ -3,6 +3,9 @@ var express = require('express');
 // initialize app
 var app = express();
 
+// set port
+var port = process.env.PORT || 8080;
+
 app.use(express.static(__dirname));
 
 app.get('/', function (request, response) {
@@ -10,8 +13,8 @@ app.get('/', function (request, response) {
     response.render("index");
 });
 
-app.listen(3000, function () {
-    console.log('Todo App listening on port 3000');
+app.listen(port, function () {
+    console.log('Todo App listening on port ' + port);
 });
 
 module.exports = app;
