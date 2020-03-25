@@ -1,10 +1,13 @@
 var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDoc = require('./swagger.json');
 
 // initialize app
 var app = express();
 app.use(express.static(__dirname));
+app.use('/documentation',swaggerUi.serve,swaggerUi.setup(swaggerDoc));
 
 // set port
 var port = process.env.PORT || 8080;

@@ -1,0 +1,141 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Todo App",
+    "contact": {
+      "name": "ahmad sirojul miftakh",
+      "email": "sirojulmiftakh@gmail.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/todo": {
+      "get": {
+        "description": "Get All Todos",
+        "responses": {
+          "200": {
+            "description": "successfully get all todos"
+          }
+        }
+      }
+    },
+
+    "/todo/{id}": {
+      "get": {
+        "description": "Get Single Todos",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "description": "parameter must be integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+
+    "/todo/save": {
+      "post": {
+        "description": "Insert Single Todos",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "title",
+            "type": "string",
+            "required": true,
+            "description": "parameter must be string"
+          },
+          {
+            "in": "formData",
+            "name": "description",
+            "type": "string",
+            "required": true,
+            "description": "parameter must be string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+
+    "/todo/update": {
+      "put": {
+        "description": "Update Single Todos",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "description": "parameter must be integer"
+          },
+          {
+            "in": "formData",
+            "name": "title",
+            "type": "string",
+            "required": true,
+            "description": "parameter must be string"
+          },
+          {
+            "in": "formData",
+            "name": "description",
+            "type": "string",
+            "required": true,
+            "description": "parameter must be string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+
+    "/todo/delete/{id}": {
+      "delete": {
+        "description": "Delete Single Todos",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "integer",
+            "required": true,
+            "description": "parameter must be integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  }
+}
