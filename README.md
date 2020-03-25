@@ -2,7 +2,8 @@
 simple todo app with nodejs and mysql
 
 ## documentation
-http://hostname:port/documentation/
+![stack Overflow](https://i.imgur.com/LNNbryYl.png)
+- access via http://hostname:port/documentation/
 
 ## installation
 clone and execute command via cli
