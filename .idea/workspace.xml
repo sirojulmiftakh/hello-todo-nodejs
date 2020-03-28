@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c17ef201-9ea0-4f43-9bc2-c8c03950ecf8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/index-mysql.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/todo.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/swagger.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo.db" beforeDir="false" afterPath="$PROJECT_DIR$/todo.db" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +78,7 @@
       <updated>1585038870461</updated>
       <workItem from="1585038871855" duration="22226000" />
       <workItem from="1585227720613" duration="712000" />
-      <workItem from="1585379985338" duration="6093000" />
+      <workItem from="1585379985338" duration="6930000" />
     </task>
     <servers />
   </component>
