@@ -1,28 +1,17 @@
 var express = require('express');
-var mysql = require('mysql');
 var bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('./swagger.json');
+const sqlite3 = require('sqlite3').verbose();
+const dbfile = __dirname + '/todo.db';
 
 // initialize app
 var app = express();
 app.use(express.static(__dirname));
-app.use('/documentation',swaggerUi.serve,swaggerUi.setup(swaggerDoc));
+app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // set port
 var port = process.env.PORT || 8080;
-
-// initalize db
-var db = mysql.createConnection({
-    host: "localhost",
-    user: "backend",
-    password: "backend",
-    database: "todoapp"
-});
-db.connect((err) => {
-    if (err) throw err;
-    console.log('mysql connected');
-});
 
 // load body parser
 app.use(bodyParser.json());
@@ -30,76 +19,105 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// connect db
+let db = new sqlite3.Database(dbfile, sqlite3.OPEN_READWRITE, (err) => {
+    if (err) throw err;
+    console.log("koneksi ke db berhasil");
+});
+
 app.get('/', function (request, response) {
     // response.send({message: 'hello express'});
     response.render("index");
 });
 
-// get list
+// get all todos
 app.get('/todo', (request, response) => {
-    let sql = "select * from notes";
-    let query = db.query(sql, (err, res) => {
-        if (err) throw err;
-        response.send({
-            message: "get todo",
-            data: res
+    db.serialize(function () {
+        let sql = "select * from todos";
+        db.all(sql, (err, rows) => {
+            if (err) throw err;
+            if (rows) {
+                response.send({
+                    message: "get all todos",
+                    data: rows
+                });
+            } else {
+                console.log("no record");
+            }
         });
     });
 });
 
-// get list by id
+// get single todos
 app.get('/todo/:id', (request, response) => {
-    let sql = "select * from notes where id=" + request.params.id;
-    let query = db.query(sql, (err, res) => {
-        if (err) throw err;
-        response.send({
-            message: "get todo by id:" + request.params.id,
-            data: res
+    db.serialize(function () {
+        let sql = "select * from todos where id=?";
+        id = request.params.id;
+        db.get(sql, [id], (err, rows) => {
+            if (err) throw err;
+            if (rows) {
+                response.send({
+                    message: "get single todos",
+                    data: rows
+                });
+            } else {
+                console.log("no record");
+            }
         });
     });
 });
 
 // save data
 app.post('/todo/save', (request, response) => {
-    let data = {title: request.body.title, description: request.body.description};
-    let sql = "insert into notes set ?";
-    let query = db.query(sql, data, (err, res) => {
-        if (err) throw err;
-        response.send({
-            message: "todo saved",
-            data: request.body
+    title = request.body.title;
+    description = request.body.description;
+    let sql = "insert into todos (title,description) values(?,?)";
+    db.serialize(function () {
+        db.run(sql, [title, description], (err, rows) => {
+            if (err) throw err;
+            response.send({
+                message: "todo saved"
+            });
         });
     });
 });
 
-// update data
+// change data
 app.put('/todo/update', (request, response) => {
-    let sql = "update notes set " +
-        "title='" + request.body.title + "'" +
-        ", description='" + request.body.description + "'" +
-        "where id=" + request.body.id;
-    let query = db.query(sql, (err, res) => {
-        if (err) throw err;
-        response.send({
-            message: "todo updated",
-            data: request.body
+    title = request.body.title;
+    description = request.body.description;
+    id = request.body.id;
+    let sql = "update todos set title=?, description=? where id=?";
+    db.serialize(function () {
+        db.run(sql, [title, description, id], (err, rows) => {
+            if (err) throw err;
+            response.send({
+                message: "todo changed"
+            });
         });
     });
 });
 
-// delete data
+// remove data
 app.delete('/todo/delete/:id', (request, response) => {
-
-    let id = request.params.id;
-    if (!id)
-        response.status(400).send('tentukan id');
-
-    let sql = "delete from notes where id=" + id + "";
-    let query = db.query(sql, (err, res) => {
-        if (err) throw err;
-        response.send({
-            message: "todo deleted"
+    db.serialize(function () {
+        let sql = "delete from todos where id=?";
+        id = request.params.id;
+        db.run(sql, [id], (err, rows) => {
+            if (err) throw err;
+            response.send({
+                message: "todo deleted"
+            });
         });
+    });
+});
+
+// fake data
+db.serialize(function () {
+    let sql = "insert into todos (title, description) values ('kerjaan 1','deskripsi 1')";
+    db.run(sql, (err) => {
+        if (err) throw err;
+        console.log('record inserted');
     });
 });
 
