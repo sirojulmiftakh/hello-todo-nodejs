@@ -16,6 +16,7 @@
   "paths": {
     "/todo": {
       "get": {
+        "summary": "Get All Todos",
         "description": "Get All Todos",
         "responses": {
           "200": {
@@ -27,6 +28,7 @@
 
     "/todo/{id}": {
       "get": {
+        "summary": "Get Single Todos",
         "description": "Get Single Todos",
         "parameters": [
           {
@@ -50,6 +52,7 @@
 
     "/todo/save": {
       "post": {
+        "summary": "Insert Single Todos",
         "description": "Insert Single Todos",
         "parameters": [
           {
@@ -80,6 +83,7 @@
 
     "/todo/update": {
       "put": {
+        "summary": "Update Single Todos",
         "description": "Update Single Todos",
         "parameters": [
           {
@@ -117,6 +121,7 @@
 
     "/todo/delete/{id}": {
       "delete": {
+        "summary": "Delete Single Todos",
         "description": "Delete Single Todos",
         "parameters": [
           {
