@@ -8,7 +8,7 @@
       "email": "sirojulmiftakh@gmail.com"
     }
   },
-  "host": "hello-todojs.herokuapp.com",
+  "host": "localhost:8080",
   "basePath": "/",
   "schemes": [
     "http",

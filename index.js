@@ -1,12 +1,14 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDoc = require('./swagger.json');
+const swaggerDoc = require('./apidoc_swagger');
 const sqlite3 = require('sqlite3').verbose();
 const dbfile = __dirname + '/todo.db';
 
 // initialize app
 var app = express();
+app.use(cors());
 app.use(express.static(__dirname));
 app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
@@ -14,10 +16,10 @@ app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 var port = process.env.PORT || 8080;
 
 // load body parser
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(bodyParser.json());
 
 // connect db
 let db = new sqlite3.Database(dbfile, sqlite3.OPEN_READWRITE, (err) => {
@@ -76,7 +78,8 @@ app.post('/todo/save', (request, response) => {
         db.run(sql, [title, description], (err, rows) => {
             if (err) throw err;
             response.send({
-                message: "todo saved"
+                message: "todo saved",
+                data: request.body
             });
         });
     });
@@ -113,16 +116,17 @@ app.delete('/todo/delete/:id', (request, response) => {
 });
 
 // fake data
-db.serialize(function () {
-    let sql = "insert into todos (title, description) values ('kerjaan 1','deskripsi 1')";
-    db.run(sql, (err) => {
-        if (err) throw err;
-        console.log('record inserted');
-    });
-});
+// db.serialize(function () {
+//     let sql = "insert into todos (title, description) values ('kerjaan 1','deskripsi 1')";
+//     db.run(sql, (err) => {
+//         if (err) throw err;
+//         console.log('record inserted');
+//     });
+// });
 
 app.listen(port, function () {
     console.log('Todo App listening on port ' + port);
+    console.log('CORS-enabled')
 });
 
 module.exports = app;

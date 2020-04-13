@@ -2,7 +2,7 @@ var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDoc = require('./swagger.json');
+const swaggerDoc = require('./apidoc_openapi.json');
 
 // initialize app
 var app = express();
